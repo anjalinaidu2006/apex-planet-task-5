@@ -1,0 +1,664 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CosmoVoyage: Interstellar Space Odyssey & Exploration Portal</title>
+
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Explore Kepler, Europa, Titan, and Mars. Train as a stellar cadet, simulate orbital docking, name your own star, and book premium futuristic interstellar voyages on CosmoVoyage." />
+    <meta name="keywords" content="space tourism, stellar exploration, astronaut simulator, star registry, Europa voyage, Kepler-186f, Mars travel" />
+
+    <!-- Google Fonts Preconnect -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preload" href="/assets/hero_landing.png" as="image" fetchpriority="high" type="image/png" />
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;800;900&family=Outfit:wght@300;400;600;700&display=swap" as="style" />
+
+    <!-- Critical CSS Inline (Ensures instant dark paint, avoids FOUC, maximizes LCP) -->
+    <style>
+      :root {
+        color-scheme: dark;
+        --bg-space: oklch(13% 0.015 240);
+        --white-text: oklch(96% 0.01 240);
+      }
+      body {
+        margin: 0;
+        background-color: var(--bg-space);
+        color: var(--white-text);
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      }
+      .header {
+        height: 80px;
+        background: oklch(13% 0.015 240 / 0.7);
+        border-bottom: 1px solid oklch(32% 0.03 240 / 0.25);
+      }
+      .detail-view-container {
+        display: none;
+      }
+    </style>
+
+    <!-- Inline theme checks to block flashes -->
+    <meta name="color-scheme" content="light dark">
+    <script>
+      {
+        const colorScheme = localStorage.getItem("color-scheme");
+        if (colorScheme) {
+          document.querySelector('meta[name="color-scheme"]').content = colorScheme;
+        }
+      }
+    </script>
+    <script type="module" crossorigin src="/assets/index-dKO0MHMN.js"></script>
+    <link rel="stylesheet" crossorigin href="/assets/index-CEm_fs29.css">
+  </head>
+  <body>
+    <div class="app-container">
+      
+      <!-- ==========================================
+           HEADER / NAVIGATION BAR
+           ========================================== -->
+      <header class="header" id="app-header">
+        <a href="#" class="logo" id="logo-link">
+          <span>Cosmo</span>Voyage
+        </a>
+        
+        <!-- Desktop Nav -->
+        <nav aria-label="Main Navigation">
+          <ul class="nav-links">
+            <li class="nav-item active" id="nav-home"><a href="#">Home</a></li>
+            <li class="nav-item" id="nav-destinations"><a href="#destinations">Destinations</a></li>
+            <li class="nav-item" id="nav-shop"><a href="#shop">Gear Shop</a></li>
+            <li class="nav-item" id="nav-simulator"><a href="#simulator">Simulator</a></li>
+            <li class="nav-item" id="nav-academy"><a href="#academy">Academy</a></li>
+            <li class="nav-item" id="nav-logs"><a href="#logs">Flight Logs</a></li>
+            <li class="nav-item" id="nav-registry"><a href="#registry">Registry</a></li>
+          </ul>
+        </nav>
+
+        <div class="header-actions">
+          <!-- Floating Cart Launcher -->
+          <button class="cart-launcher-btn" id="cart-launcher" aria-label="Open Gear Locker Registry">
+            <span class="cart-icon">🛒</span>
+            <span class="cart-badge" id="cart-badge">0</span>
+          </button>
+
+          <!-- Premium Dual-State Theme Toggle -->
+          <button class="theme-toggle-btn" id="theme-toggle" aria-label="Toggle Theme Preference">
+            <svg viewBox="0 0 24 24" id="theme-icon">
+              <!-- Sun Path by Default -->
+              <path d="M12 7c-2.76 0-5 2.24-5 5s2.24 5 5 5 5-2.24 5-5-2.24-5-5-5zM2 13h2c.55 0 1-.45 1-1s-.45-1-1-1H2c-.55 0-1 .45-1 1s.45 1 1 1zm18 0h2c.55 0 1-.45 1-1s-.45-1-1-1h-2c-.55 0-1 .45-1 1s.45 1 1 1zM11 2v2c0 .55.45 1 1 1s1-.45 1-1V2c0-.55-.45-1-1-1s-1 .45-1 1zm0 18v2c0 .55.45 1 1 1s1-.45 1-1v-2c0-.55-.45-1-1-1s-1 .45-1 1zM5.99 4.58c-.39-.39-1.03-.39-1.41 0s-.39 1.03 0 1.41l1.06 1.06c.39.39 1.03.39 1.41 0s.39-1.03 0-1.41L5.99 4.58zm12.37 12.37c-.39-.39-1.03-.39-1.41 0s-.39 1.03 0 1.41l1.06 1.06c.39.39 1.03.39 1.41 0s.39-1.03 0-1.41l-1.06-1.06zm1.06-12.37c-.39-.39-1.03-.39-1.41 0l-1.06 1.06c-.39.39-.39 1.03 0 1.41s1.03.39 1.41 0l1.06-1.06c.39-.38.39-1.02 0-1.41zm-12.37 12.37c-.39-.39-1.03-.39-1.41 0l-1.06 1.06c-.39.39-.39 1.03 0 1.41s1.03.39 1.41 0l1.06-1.06c.39-.38.39-1.02 0-1.41z"/>
+            </svg>
+          </button>
+
+          <!-- Mobile Burger button -->
+          <button class="menu-toggle-btn" id="menu-toggle" aria-label="Open Navigation Menu">
+            <span></span>
+            <span></span>
+            <span></span>
+          </button>
+        </div>
+      </header>
+
+      <!-- Mobile Navigation Drawer via Native dialog element -->
+      <dialog class="mobile-drawer" id="mobile-drawer" aria-label="Mobile Navigation Menu">
+        <div class="mobile-drawer-header">
+          <a href="#" class="logo"><span>Cosmo</span>Voyage</a>
+          <button class="mobile-drawer-close" id="drawer-close" aria-label="Close Navigation Menu">&times;</button>
+        </div>
+        <nav aria-label="Mobile Navigation">
+          <ul class="mobile-nav-links">
+            <li class="mobile-nav-item active" id="mob-home"><a href="#">Home</a></li>
+            <li class="mobile-nav-item" id="mob-destinations"><a href="#destinations">Destinations</a></li>
+            <li class="mobile-nav-item" id="mob-shop"><a href="#shop">Gear Shop</a></li>
+            <li class="mobile-nav-item" id="mob-simulator"><a href="#simulator">Simulator</a></li>
+            <li class="mobile-nav-item" id="mob-academy"><a href="#academy">Academy</a></li>
+            <li class="mobile-nav-item" id="mob-logs"><a href="#logs">Flight Logs</a></li>
+            <li class="mobile-nav-item" id="mob-registry"><a href="#registry">Registry</a></li>
+          </ul>
+        </nav>
+      </dialog>
+
+      <!-- ==========================================
+           MAIN CONTENT PAGES
+           ========================================== -->
+      <main class="main-content">
+        
+        <!-- Hero Landing Section -->
+        <section class="section hero-section animate-entrance" id="home-section">
+          <div class="hero-text-content">
+            <div class="hero-badge">Interstellar Voyage Corp</div>
+            <h1 class="hero-title-main" id="list-heading">
+              Your Gateway to the <span>Universe</span>
+            </h1>
+            <p class="hero-description">
+              Embark on an extraordinary voyage to uncharted exoplanets, customize your interstellar spaceship modules, master advanced orbital calculations in our docking flight deck, and secure your place in cosmic history.
+            </p>
+            <div class="hero-actions">
+              <a href="#destinations" class="btn btn-primary">
+                Explore Destinations
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+              </a>
+              <a href="#simulator" class="btn btn-secondary">Simulate Docking</a>
+            </div>
+          </div>
+
+          <!-- Optimized LCP Above-the-fold Hero Image -->
+          <div class="hero-visual-frame">
+            <img 
+              src="/assets/hero_landing.png" 
+              alt="Futuristic spacecraft docked at a glowing starport portal ready for launch" 
+              fetchpriority="high"
+              decoding="sync"
+              loading="eager"
+              width="500"
+              height="500"
+            />
+            <div class="hero-visual-badge">
+              <div class="hero-visual-badge-pulse"></div>
+              <div class="hero-visual-badge-text">
+                <h4>System Status</h4>
+                <p>Voyage Clearance: Active</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Planetary Stellar Explorer Section -->
+        <section class="section" id="destinations">
+          <div class="explorer-intro">
+            <h2>Stellar Voyage Explorer</h2>
+            <p>Select your planetary destination, customize your cabin class, staff your command crew, and prepare your flight boarding credentials.</p>
+          </div>
+
+          <!-- Dynamic Planet Grid -->
+          <div class="planet-grid" id="planet-grid-container">
+            <!-- Rendered dynamically by planetary-explorer.js -->
+          </div>
+        </section>
+
+        <!-- Stellar Roster Gear Shop Section -->
+        <section class="section" id="shop">
+          <div class="shop-intro">
+            <h2>Stellar Gear & Equipment Registry</h2>
+            <p>Outfit your orbital locker with essential space crew materials. Gear purchases automatically increase vacuum adaptation and G-force readiness ratings.</p>
+          </div>
+          <div class="shop-grid" id="shop-grid">
+            <!-- Rendered dynamically by gear-shop.js -->
+          </div>
+        </section>
+
+        <!-- Orbit Docking Simulator Section -->
+        <section class="section" id="simulator">
+          <h2>Orbit Docking Simulator</h2>
+          <div class="simulator-layout">
+            
+            <!-- Canvas Simulation Box -->
+            <div class="canvas-container glass-panel">
+              <canvas id="docking-canvas" width="800" height="500"></canvas>
+              
+              <!-- State Overlays (Win / Lose) -->
+              <div class="sim-state-overlay" id="sim-overlay">
+                <h3 class="sim-state-title" id="sim-overlay-title">Mission Succeeded</h3>
+                <p class="sim-state-desc" id="sim-overlay-desc">Excellent maneuvering. Your spacecraft successfully locked onto the station ports.</p>
+                <button class="btn btn-primary" id="sim-reset-btn">Initiate Next Run</button>
+              </div>
+            </div>
+
+            <!-- Controls and Dynamic HUD Status Panel -->
+            <div class="simulator-controls-panel glass-panel">
+              <h3>Flight Deck HUD</h3>
+              <p class="simulator-instructions">
+                <strong>Controls:</strong> Use keyboard keys <strong>W</strong> (Thrust Forward), <strong>S</strong> (Thrust Backward), <strong>A</strong> (Rotate Counter-Clockwise), <strong>D</strong> (Rotate Clockwise) to guide your spacecraft safely to the glowing docking port of the rotating orbital space station. Avoid the gravity pull of the celestial anchor!
+              </p>
+
+              <div class="simulator-hud-grid">
+                <div class="simulator-hud-card">
+                  <span class="hud-label">Velocity</span>
+                  <span class="hud-value" id="hud-velocity">0.00 m/s</span>
+                </div>
+                <div class="simulator-hud-card">
+                  <span class="hud-label">Distance to Port</span>
+                  <span class="hud-value" id="hud-distance">0.0 m</span>
+                </div>
+                <div class="simulator-hud-card">
+                  <span class="hud-label">Reactor Fuel</span>
+                  <span class="hud-value" id="hud-fuel">100 %</span>
+                </div>
+                <div class="simulator-hud-card">
+                  <span class="hud-label">Target Angle</span>
+                  <span class="hud-value" id="hud-angle">0.0°</span>
+                </div>
+              </div>
+
+              <button class="btn btn-secondary" id="sim-audio-toggle">Toggle Synth Audio: On</button>
+            </div>
+          </div>
+        </section>
+
+        <!-- Cadet Dashboard & Space Weather (With content-visibility auto for performance) -->
+        <section class="section dashboard-section" id="academy">
+          <h2>Cadet Academy & Space Weather</h2>
+          <div class="dashboard-layout">
+            
+            <!-- Astronaut Cadet Training metrics -->
+            <div class="glass-panel">
+              <h3>Astronaut Cadet Profile</h3>
+              <div class="academy-rank-row">
+                <span class="academy-rank-label">Current Rank:</span>
+                <span class="academy-rank-value cadet" id="cadet-rank-title">Cadet Candidate</span>
+              </div>
+              <p>Track your active training progression metrics. Complete the aptitude test to obtain Stellar Commander rank and clear voyages.</p>
+              <button class="btn btn-secondary" id="quiz-btn" style="margin-bottom:1.5rem; width:100%;">Take Aptitude Test</button>
+              
+              <div class="dashboard-card-grid">
+                <!-- Metric Card 1 -->
+                <div class="training-progress-card">
+                  <div class="training-progress-header">
+                    <span class="training-progress-title">G-Force Tolerance</span>
+                    <span class="training-progress-val" id="g-force-val">0%</span>
+                  </div>
+                  <div class="progress-track">
+                    <div class="progress-bar" id="g-force-bar"></div>
+                  </div>
+                </div>
+
+                <!-- Metric Card 2 -->
+                <div class="training-progress-card">
+                  <div class="training-progress-header">
+                    <span class="training-progress-title">Vacuum Adaptation</span>
+                    <span class="training-progress-val" id="vacuum-val">0%</span>
+                  </div>
+                  <div class="progress-track">
+                    <div class="progress-bar" id="vacuum-bar"></div>
+                  </div>
+                </div>
+
+                <!-- Metric Card 3 -->
+                <div class="training-progress-card">
+                  <div class="training-progress-header">
+                    <span class="training-progress-title">Docking Accuracy</span>
+                    <span class="training-progress-val" id="docking-accuracy-val">0%</span>
+                  </div>
+                  <div class="progress-track">
+                    <div class="progress-bar" id="docking-accuracy-bar"></div>
+                  </div>
+                </div>
+
+                <!-- Metric Card 4 -->
+                <div class="training-progress-card">
+                  <div class="training-progress-header">
+                    <span class="training-progress-title">Deep Space Navigation</span>
+                    <span class="training-progress-val" id="navigation-val">0%</span>
+                  </div>
+                  <div class="progress-track">
+                    <div class="progress-bar" id="navigation-bar"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Shuttle launch schedule timeline + Space Weather widget -->
+            <div class="dashboard-card-grid">
+              
+              <!-- Flight Schedule -->
+              <div class="glass-panel">
+                <h3>Launch Schedule</h3>
+                <div class="dashboard-timeline">
+                  <div class="timeline-item">
+                    <span class="timeline-date">T-Minus 1d</span>
+                    <div class="timeline-info">
+                      <h4 class="timeline-title">Europa Expedition</h4>
+                      <p class="timeline-desc">Vessel: Aether-IX. Crew readiness checks.</p>
+                    </div>
+                  </div>
+                  <div class="timeline-item">
+                    <span class="timeline-date">T-Minus 4d</span>
+                    <div class="timeline-info">
+                      <h4 class="timeline-title">Mars Shuttle launch</h4>
+                      <p class="timeline-desc">Vessel: Horizon-3. Orbital insertion window.</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Space Weather Index -->
+              <div class="glass-panel space-weather-card">
+                <h3>Space Weather Status</h3>
+                
+                <div class="weather-metric-row">
+                  <div class="weather-metric-label">
+                    <span class="weather-metric-name">Solar Wind Speed</span>
+                    <span class="weather-metric-desc">Charged solar particles stream</span>
+                  </div>
+                  <span class="weather-metric-val" id="weather-solar-wind">380 km/s</span>
+                </div>
+
+                <div class="weather-metric-row">
+                  <div class="weather-metric-label">
+                    <span class="weather-metric-name">Radiation Dose Index</span>
+                    <span class="weather-metric-desc">Van Allen belt level</span>
+                  </div>
+                  <span class="weather-metric-val" id="weather-radiation">12.4 uSv/h</span>
+                </div>
+
+                <div class="weather-metric-row">
+                  <div class="weather-metric-label">
+                    <span class="weather-metric-name">Solar Flare Index</span>
+                    <span class="weather-metric-desc">X-ray classification class</span>
+                  </div>
+                  <span class="weather-metric-val" id="weather-solar-flare">Class C1.2</span>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </section>
+
+        <!-- Flight Logs & Captains' Blog Section -->
+        <section class="section" id="logs">
+          <div class="logs-intro">
+            <h2>Flight Logs & Journals</h2>
+            <p>Access telemetry archives, reports, and experiences logged by certified deep space captains.</p>
+          </div>
+          
+          <div class="logs-controls-bar glass-panel">
+            <div class="logs-search-wrapper">
+              <span class="search-icon">🔍</span>
+              <input type="text" id="logs-search" class="logs-search-input" placeholder="Query flight logs (e.g. vents, Titan, Kira)..." aria-label="Query flight logs" />
+            </div>
+            
+            <div class="logs-filter-wrapper">
+              <label for="logs-filter" class="visually-hidden">Filter Logs</label>
+              <select id="logs-filter" class="logs-filter-select">
+                <option value="">All Sectors & Destinations</option>
+                <option value="Europa">Europa</option>
+                <option value="Mars">Mars</option>
+                <option value="Titan">Titan</option>
+                <option value="Kepler-186f">Kepler-186f</option>
+                <option value="Orion Arm Sector">Orion Arm Sector</option>
+                <option value="Cygnus X Void">Cygnus X Void</option>
+                <option value="Sagittarius A* Core">Sagittarius A* Core</option>
+                <option value="Centauri Alpha cluster">Centauri Alpha cluster</option>
+              </select>
+            </div>
+          </div>
+          
+          <div class="logs-layout-grid">
+            <!-- Feed stream -->
+            <div class="logs-feed" id="logs-list">
+              <!-- Rendered dynamically by flight-logs.js -->
+            </div>
+            
+            <!-- Submit Log form -->
+            <div class="glass-panel logs-form-card">
+              <h3>Submit Telemetry Entry</h3>
+              <p>Record your stellar observations. Entries are dynamically updated on the fleet subspace logs.</p>
+              
+              <form id="write-log-form" class="write-log-form" novalidate>
+                <div class="form-group">
+                  <label for="log-author" class="form-label">Flight Officer Name</label>
+                  <input type="text" id="log-author" class="form-input" placeholder="e.g. Cadet Miller" required minlength="3" aria-errormessage="err-log-author" />
+                  <span id="err-log-author" class="error-message" role="alert">Officer name is required (min 3 chars).</span>
+                </div>
+                <div class="form-group">
+                  <label for="log-title" class="form-label">Entry Subject/Title</label>
+                  <input type="text" id="log-title" class="form-input" placeholder="e.g., Solar Drift Observations" required minlength="4" aria-errormessage="err-log-title" />
+                  <span id="err-log-title" class="error-message" role="alert">Log entry subject is required (min 4 chars).</span>
+                </div>
+                <div class="form-group">
+                  <label for="log-planet" class="form-label">Observed Target Destination</label>
+                  <select id="log-planet" class="form-select" required aria-errormessage="err-log-planet">
+                    <option value="" disabled selected>Select Destination</option>
+                    <option value="Mars">Mars</option>
+                    <option value="Europa">Europa</option>
+                    <option value="Titan">Titan</option>
+                    <option value="Kepler-186f">Kepler-186f</option>
+                  </select>
+                  <span id="err-log-planet" class="error-message" role="alert">Please select observed destination.</span>
+                </div>
+                <div class="form-group">
+                  <label for="log-sector-select" class="form-label">Observational Sector</label>
+                  <select id="log-sector-select" class="form-select" required aria-errormessage="err-log-sector">
+                    <option value="" disabled selected>Select Sector</option>
+                    <option value="Orion Arm Sector">Orion Arm Sector</option>
+                    <option value="Sagittarius A* Core">Sagittarius A* Core</option>
+                    <option value="Centauri Alpha cluster">Centauri Alpha cluster</option>
+                    <option value="Cygnus X Void">Cygnus X Void</option>
+                  </select>
+                  <span id="err-log-sector" class="error-message" role="alert">Please select targeting sector.</span>
+                </div>
+                <div class="form-group log-form-full-row">
+                  <label for="log-content" class="form-label">Transmission Log Content</label>
+                  <textarea id="log-content" class="form-textarea" rows="4" placeholder="Input flight measurements, anomalies, or logs..." required minlength="10" aria-errormessage="err-log-content"></textarea>
+                  <span id="err-log-content" class="error-message" role="alert">Log content is required (min 10 characters).</span>
+                </div>
+                <button type="submit" class="btn btn-primary log-form-full-row">Submit Subspace Entry</button>
+              </form>
+            </div>
+          </div>
+        </section>
+
+        <!-- Celestial Registry Section (Purchase star certificate) -->
+        <section class="section" id="registry">
+          <h2>Celestial Star Registry</h2>
+          <div class="registry-layout">
+            
+            <!-- Premium Star registration form with modern field validation CSS -->
+            <div class="glass-panel registry-card">
+              <h3>Register Your Star</h3>
+              <p>Name a celestial star in one of our mapped cosmic sectors and receive a verified, signed cryptographic certificate.</p>
+              
+              <form class="registry-form" id="star-registry-form" novalidate>
+                <div class="form-group">
+                  <label for="reg-cadet-name" class="form-label">Cadet Full Name</label>
+                  <input type="text" id="reg-cadet-name" class="form-input" placeholder="e.g., Jane Cooper" required minlength="3" />
+                  <span class="error-message" role="alert">Full name is required (min 3 characters).</span>
+                </div>
+
+                <div class="form-group">
+                  <label for="reg-cadet-email" class="form-label">Subspace Comm Email</label>
+                  <input type="email" id="reg-cadet-email" class="form-input" placeholder="e.g., jane@subspace.com" required />
+                  <span class="error-message" role="alert">Please enter a valid subspace email address.</span>
+                </div>
+
+                <div class="form-group">
+                  <label for="reg-star-name" class="form-label">Celestial Star Name</label>
+                  <input type="text" id="reg-star-name" class="form-input" placeholder="e.g., Nova-Auriga" required minlength="2" />
+                  <span class="error-message" role="alert">Star name is required (min 2 characters).</span>
+                </div>
+
+                <div class="form-group">
+                  <label for="reg-sector" class="form-label">Stellar Sector</label>
+                  <select id="reg-sector" class="form-select" required>
+                    <option value="" disabled selected>Select Sector</option>
+                    <option value="Orion-Arm">Orion Arm Sector</option>
+                    <option value="Sagittarius-A">Sagittarius A* Core</option>
+                    <option value="Centauri-Alpha">Centauri Alpha cluster</option>
+                    <option value="Cygnus-X">Cygnus X Void</option>
+                  </select>
+                  <span class="error-message" role="alert">Please select a stellar sector.</span>
+                </div>
+
+                <button type="submit" class="btn btn-primary registry-form-full">Buy Star Certificate ($89)</button>
+              </form>
+            </div>
+
+            <!-- Dynamic visual certificate rendering mockup -->
+            <div class="registry-visual-display" id="registry-display">
+              <div class="certificate-mockup" id="cert-render">
+                <div class="certificate-mockup-header">Celestial Star Registry</div>
+                <div class="certificate-mockup-body">
+                  <div class="certificate-star-name" id="cert-star-name">STAR-COGNITO</div>
+                  <div class="certificate-star-coords" id="cert-coords">Sector: Orion Arm / RA 12h 4m</div>
+                </div>
+                <div class="certificate-mockup-footer">
+                  <div class="certificate-cadet-text">Owner: <span id="cert-owner">Cadet Jane Cooper</span></div>
+                  <div class="certificate-seal"></div>
+                </div>
+              </div>
+              <p>A live cryptographic mockup representing your official star deed coordinates.</p>
+            </div>
+            
+          </div>
+        </section>
+
+      </main>
+
+      <!-- Dynamic View Transition Planet Detail View Portal -->
+      <div class="detail-view-container" id="planet-detail-portal">
+        <div class="detail-view-content" id="detail-page">
+          <div class="detail-view-visuals">
+            <button class="btn btn-secondary detail-view-back-btn" id="detail-back-btn" aria-label="Return to Planetary Grid">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+              Stellar Registry
+            </button>
+            <div class="detail-view-image-box">
+              <img src="" alt="" id="detail-img" />
+            </div>
+          </div>
+
+          <div class="detail-view-form-panel glass-panel">
+            <div class="detail-view-title-box">
+              <span class="detail-view-subtitle" id="detail-subtitle">Exoplanet Core</span>
+              <h2 class="detail-view-title" id="detail-heading" tabindex="-1">Kepler-186f</h2>
+            </div>
+            <p class="detail-view-desc" id="detail-description">
+              Europa is a high-priority exploration target. It contains a deep global saltwater ocean under an icy outer shell.
+            </p>
+
+            <form class="customizer-options" id="voyage-customize-form" onsubmit="event.preventDefault();">
+              
+              <!-- Cabin Selection -->
+              <div class="customizer-group">
+                <span class="customizer-label">Space Cabin Grade</span>
+                <div class="customizer-options-row">
+                  <div class="customizer-option-card selected" data-cabin="standard" data-price-mult="1.0">
+                    <div class="customizer-option-card-title">Standard</div>
+                    <span class="customizer-option-card-sub">Base Fare</span>
+                  </div>
+                  <div class="customizer-option-card" data-cabin="suite" data-price-mult="1.5">
+                    <div class="customizer-option-card-title">Suite</div>
+                    <span class="customizer-option-card-sub">+50% Cabin Upgrade</span>
+                  </div>
+                  <div class="customizer-option-card" data-cabin="observatory" data-price-mult="2.2">
+                    <div class="customizer-option-card-title">Observatory</div>
+                    <span class="customizer-option-card-sub">+120% Full Dome View</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Crew Roster selection -->
+              <div class="customizer-group">
+                <div class="customizer-label">
+                  <span>Flight Command Crew size</span>
+                  <span id="crew-limit-text">Max 4 personnel</span>
+                </div>
+                <div class="crew-counter-box">
+                  <button class="crew-count-btn" id="crew-decrement" type="button">-</button>
+                  <span class="crew-count-val" id="crew-count-display">1</span>
+                  <button class="crew-count-btn" id="crew-increment" type="button">+</button>
+                </div>
+              </div>
+
+              <!-- Dynamic voyage summary card -->
+              <div class="voyage-summary-box">
+                <div class="voyage-summary-grid">
+                  <div class="voyage-summary-item">
+                    <span class="voyage-summary-label">Estimated Transit</span>
+                    <span class="voyage-summary-val" id="summary-duration">0 days</span>
+                  </div>
+                  <div class="voyage-summary-item">
+                    <span class="voyage-summary-label">Target Sector</span>
+                    <span class="voyage-summary-val" id="summary-sector">None</span>
+                  </div>
+                </div>
+
+                <div class="voyage-summary-price">
+                  <span class="voyage-summary-price-label">Ticket Fare</span>
+                  <span class="voyage-summary-price-val" id="summary-price">$0</span>
+                </div>
+              </div>
+
+              <button class="btn btn-primary" id="voyage-book-btn" type="button">Book Stellar Boarding Credentials</button>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <!-- Cart Drawer Overlay via native dialog -->
+      <dialog class="cart-drawer-modal" id="cart-drawer" aria-label="Roster Gear Locker Cart">
+        <div class="cart-drawer-header">
+          <h3>Gear Locker Registry</h3>
+          <button class="cart-drawer-close" id="cart-close-btn" aria-label="Close Cart Locker">&times;</button>
+        </div>
+        <div class="cart-drawer-body">
+          <ul class="cart-items-list" id="cart-items-list">
+            <!-- Rendered dynamically by gear-shop.js -->
+          </ul>
+          <div class="cart-summary-total">
+            <span>Roster Cost Subtotal:</span>
+            <strong id="cart-subtotal">$0 Credits</strong>
+          </div>
+          
+          <div class="checkout-form-container">
+            <h4>Sign Voyage Credits Order</h4>
+            <form id="checkout-form" class="checkout-form" novalidate>
+              <div class="form-group">
+                <label for="chk-name" class="form-label">Full Name</label>
+                <input type="text" id="chk-name" class="form-input" placeholder="Cadet name" required minlength="3" aria-errormessage="err-chk-name" />
+                <span id="err-chk-name" class="error-message" role="alert">Full name is required (min 3 chars).</span>
+              </div>
+              <div class="form-group">
+                <label for="chk-email" class="form-label">Subspace Email</label>
+                <input type="email" id="chk-email" class="form-input" placeholder="subspace@voyage.com" required aria-errormessage="err-chk-email" />
+                <span id="err-chk-email" class="error-message" role="alert">Valid subspace email required.</span>
+              </div>
+              <div class="form-group">
+                <label for="chk-wallet" class="form-label">Space Credits Wallet Address (Hex)</label>
+                <input type="text" id="chk-wallet" class="form-input" placeholder="e.g., 0x2A3F9B" required pattern="^0x[a-fA-F0-9]{4,}$" aria-errormessage="err-chk-wallet" />
+                <span id="err-chk-wallet" class="error-message" role="alert">Must be a valid hex address starting with 0x (min 6 chars).</span>
+              </div>
+              <button type="submit" class="btn btn-primary checkout-submit-btn">Defray Flight Credits</button>
+            </form>
+          </div>
+        </div>
+      </dialog>
+
+      <!-- Cadet Academy Quiz dialog -->
+      <dialog class="quiz-modal" id="quiz-modal" aria-label="Cadet Flight Aptitude Test">
+        <div class="quiz-modal-header">
+          <h3>Aptitude Test: Stellar Officer Clearance</h3>
+          <button class="quiz-modal-close" id="quiz-close-btn" aria-label="Close Quiz">&times;</button>
+        </div>
+        <form id="academy-quiz-form" class="quiz-modal-body" novalidate>
+          <p class="quiz-instructions">Answer all questions correctly to qualify for Stellar Commander rank promotion. Miscalculations will cancel voyage clearances.</p>
+          <div id="quiz-questions-container">
+            <!-- Questions rendered by academy-quiz.js -->
+          </div>
+          <button type="submit" class="btn btn-primary quiz-submit-btn">Submit Telemetry Answers</button>
+        </form>
+      </dialog>
+
+      <!-- Toast Alert overlay -->
+      <div class="toast-container" id="toast-container" aria-live="polite"></div>
+
+      <!-- ==========================================
+           FOOTER SECTION
+           ========================================== -->
+      <footer class="footer">
+        <ul class="footer-nav">
+          <li class="footer-nav-item"><a href="#" class="footer-nav-link">Aether Voyage</a></li>
+          <li class="footer-nav-item"><a href="#destinations" class="footer-nav-link">Destinations</a></li>
+          <li class="footer-nav-item"><a href="#simulator" class="footer-nav-link">Flight Deck</a></li>
+          <li class="footer-nav-item"><a href="#academy" class="footer-nav-link">Cadet Academy</a></li>
+          <li class="footer-nav-item"><a href="#registry" class="footer-nav-link">Star Registry</a></li>
+        </ul>
+        <p class="copyright">&copy; 2026 CosmoVoyage Interstellar Corp. All rights reserved. Deep Space Navigation Licensed.</p>
+      </footer>
+
+    </div>
+    
+    <!-- Primary Javascript Module Orchestrator -->
+  </body>
+</html>
